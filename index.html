@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sawrave Ahmed — Data Analyst Portfolio</title>
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #1a1d27;
+    --border: #2a2d3a;
+    --accent: #4f8ef7;
+    --accent-dim: rgba(79,142,247,0.12);
+    --text: #e8eaf0;
+    --muted: #8b90a0;
+    --tag-bg: #1e2235;
+    --white: #ffffff;
+    --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 15px;
+  }
+
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15,17,23,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+  .nav-brand { font-weight: 700; font-size: 16px; color: var(--white); letter-spacing: 0.3px; }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a { color: var(--muted); font-size: 14px; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+  /* HERO */
+  .hero {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 90px 40px 70px;
+  }
+  .hero-label {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-size: 52px;
+    font-weight: 800;
+    color: var(--white);
+    line-height: 1.1;
+    margin-bottom: 10px;
+    letter-spacing: -1px;
+  }
+  .hero-sub {
+    font-size: 20px;
+    color: var(--muted);
+    margin-bottom: 24px;
+    font-weight: 400;
+  }
+  .hero-desc {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 580px;
+    margin-bottom: 36px;
+    line-height: 1.7;
+  }
+  .hero-links { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: #3d7ef0; text-decoration: none; }
+  .btn-ghost { background: transparent; color: var(--text); border: 1px solid var(--border); }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+
+  /* STATS */
+  .stats {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 40px 60px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .stat-num { font-size: 28px; font-weight: 800; color: var(--white); }
+  .stat-label { font-size: 12px; color: var(--muted); margin-top: 4px; }
+
+  /* SECTION */
+  section {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 60px 40px;
+    border-top: 1px solid var(--border);
+  }
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 32px;
+  }
+
+  /* PROJECTS */
+  .projects-grid { display: grid; gap: 16px; }
+
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .project-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+  .project-card.featured { border-color: rgba(79,142,247,0.3); background: linear-gradient(135deg, #1a1d27 0%, #1a2035 100%); }
+
+  .project-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+  .project-name { font-size: 17px; font-weight: 700; color: var(--white); }
+  .project-badge {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 20px;
+    background: var(--accent-dim);
+    color: var(--accent);
+  }
+  .project-desc { font-size: 14px; color: var(--muted); margin-bottom: 16px; line-height: 1.6; }
+
+  .project-bullets { padding-left: 18px; margin-bottom: 16px; }
+  .project-bullets li { font-size: 13.5px; color: #c0c4d0; margin-bottom: 5px; line-height: 1.5; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 16px; }
+  .tag {
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 6px;
+    background: var(--tag-bg);
+    color: var(--muted);
+    border: 1px solid var(--border);
+  }
+  .project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .project-link:hover { text-decoration: underline; }
+
+  /* SKILLS */
+  .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .skill-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 22px;
+  }
+  .skill-category { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+  .skill-items { display: flex; flex-wrap: wrap; gap: 7px; }
+  .skill-item {
+    font-size: 13px;
+    padding: 4px 11px;
+    border-radius: 6px;
+    background: var(--tag-bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+
+  /* EXPERIENCE / EDUCATION */
+  .timeline { display: grid; gap: 16px; }
+  .timeline-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px 26px;
+  }
+  .timeline-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+  .timeline-title { font-size: 16px; font-weight: 700; color: var(--white); }
+  .timeline-date { font-size: 13px; color: var(--muted); }
+  .timeline-sub { font-size: 14px; color: var(--accent); margin-bottom: 8px; }
+  .timeline-desc { font-size: 14px; color: var(--muted); }
+  .timeline-bullets { padding-left: 18px; margin-top: 8px; }
+  .timeline-bullets li { font-size: 13.5px; color: #c0c4d0; margin-bottom: 4px; }
+
+  /* CERTS */
+  .certs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .cert-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .cert-name { font-size: 15px; font-weight: 700; color: var(--white); }
+  .cert-issuer { font-size: 13px; color: var(--accent); }
+  .cert-date { font-size: 12px; color: var(--muted); }
+
+  /* CONTACT */
+  .contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .contact-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: border-color 0.2s;
+  }
+  .contact-card:hover { border-color: var(--accent); }
+  .contact-icon { font-size: 22px; margin-bottom: 8px; }
+  .contact-label { font-size: 12px; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; letter-spacing: 1px; }
+  .contact-value { font-size: 14px; color: var(--text); font-weight: 600; }
+  .contact-card a { color: var(--text); }
+  .contact-card a:hover { color: var(--accent); text-decoration: none; }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    padding: 32px;
+    font-size: 13px;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 600px) {
+    nav { padding: 0 20px; }
+    .hero, section { padding-left: 20px; padding-right: 20px; }
+    .stats { padding-left: 20px; padding-right: 20px; grid-template-columns: repeat(2, 1fr); }
+    .hero h1 { font-size: 36px; }
+    .skills-grid, .certs-grid, .contact-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Sawrave Ahmed</div>
+  <div class="nav-links">
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#research">Research</a>
+    <a href="#certifications">Certifications</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-label">Data Analyst · BI & Analytics</span>
+  <h1>Sawrave Ahmed</h1>
+  <p class="hero-sub">Turning raw data into decisions.</p>
+  <p class="hero-desc">CS graduate from BRAC University building end-to-end data solutions — from ETL pipelines and data warehouses to BI dashboards and predictive models. Based in Dhaka, Bangladesh.</p>
+  <div class="hero-links">
+    <a href="https://github.com/Sawrave007" class="btn btn-primary" target="_blank">⟡ GitHub</a>
+    <a href="https://linkedin.com/in/sawrave-ahmed007" class="btn btn-ghost" target="_blank">LinkedIn</a>
+    <a href="mailto:sawraveahmed007@gmail.com" class="btn btn-ghost">Email Me</a>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-card">
+    <div class="stat-num">7</div>
+    <div class="stat-label">Projects Built</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">500K+</div>
+    <div class="stat-label">Rows Analyzed</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">3.63</div>
+    <div class="stat-label">CGPA / 4.00</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num">2</div>
+    <div class="stat-label">Certifications</div>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-label">Portfolio</div>
+  <div class="section-title">Projects</div>
+  <div class="projects-grid">
+
+    <div class="project-card featured">
+      <div class="project-top">
+        <div class="project-name">Data Warehouse & Analytics — Medallion Architecture</div>
+        <span class="project-badge">Featured</span>
+      </div>
+      <ul class="project-bullets">
+        <li>Designed and built a modern data warehouse using Medallion Architecture (Bronze, Silver, Gold layers) on SQL Server, integrating ERP and CRM-style source data through structured ETL pipelines.</li>
+        <li>Gold layer modeled into a Star Schema with fact and dimension tables optimized for analytical queries.</li>
+        <li>Connected Gold layer to Power BI, building an interactive dashboard covering revenue trends, customer segments, and product performance metrics.</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">SQL Server</span><span class="tag">T-SQL</span><span class="tag">ETL</span>
+        <span class="tag">Star Schema</span><span class="tag">Power BI</span><span class="tag">Medallion Architecture</span>
+      </div>
+      <a href="https://github.com/Sawrave007/sql-data-warehouse-project" class="project-link" target="_blank">→ View on GitHub</a>
+    </div>
+
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-name">Library Management System: ETL Pipeline</div>
+        <span class="project-badge">ETL</span>
+      </div>
+      <ul class="project-bullets">
+        <li>Built a reusable Python ingestion pipeline to load raw CSV files into SQL Server staging schema, then migrated into a structured final schema with correct data types, primary and foreign keys.</li>
+        <li>Pipeline handles new data without code changes — production-ready design.</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">SQL Server</span><span class="tag">T-SQL</span>
+      </div>
+      <a href="https://github.com/Sawrave007/Library-Management-System" class="project-link" target="_blank">→ View on GitHub</a>
+    </div>
+
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-name">Customer Churn & Lifetime Value Prediction</div>
+        <span class="project-badge">ML</span>
+      </div>
+      <ul class="project-bullets">
+        <li>Analyzed 500,000+ e-commerce transactions, engineered 10+ customer-level features, and performed customer segmentation, CLV estimation, and churn prediction using Python and Scikit-learn.</li>
+        <li>Applied IQR-based outlier handling and StandardScaler normalization to ensure model reliability.</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">Scikit-learn</span>
+        <span class="tag">NumPy</span><span class="tag">Matplotlib</span><span class="tag">Seaborn</span>
+      </div>
+      <a href="https://github.com/Sawrave007/Data-Science-Project" class="project-link" target="_blank">→ View on GitHub</a>
+    </div>
+
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-name">Airbnb Market Analysis — Tableau Dashboard</div>
+        <span class="project-badge">BI</span>
+      </div>
+      <ul class="project-bullets">
+        <li>Analyzed 2016 Airbnb listings data to uncover pricing trends, availability patterns, and revenue insights across property types and locations.</li>
+        <li>Presented findings through an interactive Tableau dashboard for stakeholder decision-making.</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">Tableau</span><span class="tag">Data Visualization</span><span class="tag">EDA</span>
+      </div>
+      <a href="https://github.com/Sawrave007/Tableu-Project" class="project-link" target="_blank">→ View on GitHub</a>
+    </div>
+
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-name">Web Scraping — Wikipedia Largest Companies</div>
+        <span class="project-badge">Scraping</span>
+      </div>
+      <ul class="project-bullets">
+        <li>Scraped Wikipedia's largest companies by revenue table using BeautifulSoup, resolving a 403 error with custom headers.</li>
+        <li>Handled HTML rowspan logic manually to correctly align multi-row cells into a clean pandas DataFrame.</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">Python</span><span class="tag">BeautifulSoup</span><span class="tag">Requests</span><span class="tag">Pandas</span>
+      </div>
+      <a href="https://github.com/Sawrave007/web_scraping_python" class="project-link" target="_blank">→ View on GitHub</a>
+    </div>
+
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-name">Retail Sales Analysis</div>
+        <span class="project-badge">SQL</span>
+      </div>
+      <ul class="project-bullets">
+        <li>Designed a retail sales database, cleaned 2,000+ transactions, and answered key business questions on revenue, customer behavior, and category performance.</li>
+        <li>Used window functions to rank customers by spend within each product category.</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">SQL Server</span><span class="tag">T-SQL</span><span class="tag">Window Functions</span><span class="tag">EDA</span>
+      </div>
+      <a href="https://github.com/Sawrave007/SQL_RetailSales" class="project-link" target="_blank">→ View on GitHub</a>
+    </div>
+
+    <div class="project-card">
+      <div class="project-top">
+        <div class="project-name">Car Price Prediction Model</div>
+        <span class="project-badge">ML</span>
+      </div>
+      <ul class="project-bullets">
+        <li>Built regression models to predict used car prices with end-to-end preprocessing including encoding, feature selection, and evaluation using RMSE and R².</li>
+      </ul>
+      <div class="tags">
+        <span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">Scikit-learn</span><span class="tag">Regression</span>
+      </div>
+      <a href="https://github.com/Sawrave007" class="project-link" target="_blank">→ View on GitHub</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-label">Expertise</div>
+  <div class="section-title">Technical Skills</div>
+  <div class="skills-grid">
+    <div class="skill-card">
+      <div class="skill-category">Programming & Data Analysis</div>
+      <div class="skill-items">
+        <span class="skill-item">Python</span><span class="skill-item">Pandas</span>
+        <span class="skill-item">NumPy</span><span class="skill-item">Scikit-learn</span>
+        <span class="skill-item">Matplotlib</span><span class="skill-item">Seaborn</span>
+        <span class="skill-item">BeautifulSoup</span><span class="skill-item">Requests</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-category">SQL & Databases</div>
+      <div class="skill-items">
+        <span class="skill-item">T-SQL</span><span class="skill-item">SQL Server</span>
+        <span class="skill-item">MySQL</span><span class="skill-item">PostgreSQL</span>
+        <span class="skill-item">ETL</span><span class="skill-item">Star Schema</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-category">BI & Visualization</div>
+      <div class="skill-items">
+        <span class="skill-item">Power BI</span><span class="skill-item">Tableau</span>
+        <span class="skill-item">DAX</span><span class="skill-item">Microsoft Excel</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-category">Concepts</div>
+      <div class="skill-items">
+        <span class="skill-item">Data Modeling</span><span class="skill-item">Medallion Architecture</span>
+        <span class="skill-item">EDA</span><span class="skill-item">Statistical Analysis</span>
+        <span class="skill-item">ERP/CRM Data</span><span class="skill-item">Machine Learning</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section id="research">
+  <div class="section-label">Academic</div>
+  <div class="section-title">Research</div>
+  <div class="timeline">
+    <div class="timeline-card">
+      <div class="timeline-top">
+        <div class="timeline-title">Network Penetration Testing Using Reinforcement Learning</div>
+        <div class="timeline-date">2025</div>
+      </div>
+      <div class="timeline-sub">Undergraduate Thesis — BRAC University</div>
+      <ul class="timeline-bullets">
+        <li>Designed a Hierarchical Reinforcement Learning (Feudal Manager-Worker) agent and a dynamic scenario generator extending the NASimEmu simulator, automating multi-stage network attack planning across randomized, noisy environments (12 subnets, 80+ hosts).</li>
+        <li>Achieved 95–100% policy generalization retention on unseen network topologies.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label">Background</div>
+  <div class="section-title">Education</div>
+  <div class="timeline">
+    <div class="timeline-card">
+      <div class="timeline-top">
+        <div class="timeline-title">BRAC University</div>
+        <div class="timeline-date">Jan 2022 – Feb 2026</div>
+      </div>
+      <div class="timeline-sub">BSc in Computer Science</div>
+      <div class="timeline-desc">CGPA: 3.63 / 4.00</div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-label">Credentials</div>
+  <div class="section-title">Certifications</div>
+  <div class="certs-grid">
+    <div class="cert-card">
+      <div class="cert-name">Data Literacy Professional</div>
+      <div class="cert-issuer">DataCamp</div>
+      <div class="cert-date">April 2026</div>
+      <a href="https://www.datacamp.com/completed/statement-of-accomplishment/track/7fd23f4f33ff40ac9ae09f08b59f6673bf8e2f2a" style="font-size:13px; margin-top:6px;" target="_blank">View Certificate →</a>
+    </div>
+    <div class="cert-card">
+      <div class="cert-name">SQL Fundamentals</div>
+      <div class="cert-issuer">DataCamp</div>
+      <div class="cert-date">August 2026</div>
+      <a href="https://www.datacamp.com/completed/statement-of-accomplishment/track/3e4294e1e4a81a0926e9be7f06735413211a5ae0" style="font-size:13px; margin-top:6px;" target="_blank">View Certificate →</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Get In Touch</div>
+  <div class="section-title">Contact</div>
+  <div class="contact-grid">
+    <div class="contact-card">
+      <div class="contact-icon">✉</div>
+      <div class="contact-label">Email</div>
+      <div class="contact-value"><a href="mailto:sawraveahmed007@gmail.com">sawraveahmed007@gmail.com</a></div>
+    </div>
+    <div class="contact-card">
+      <div class="contact-icon">⟡</div>
+      <div class="contact-label">GitHub</div>
+      <div class="contact-value"><a href="https://github.com/Sawrave007" target="_blank">github.com/Sawrave007</a></div>
+    </div>
+    <div class="contact-card">
+      <div class="contact-icon">in</div>
+      <div class="contact-label">LinkedIn</div>
+      <div class="contact-value"><a href="https://linkedin.com/in/sawrave-ahmed007" target="_blank">sawrave-ahmed007</a></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Built by Sawrave Ahmed · Dhaka, Bangladesh · 2026
+</footer>
+
+</body>
+</html>
